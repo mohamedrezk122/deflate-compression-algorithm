@@ -1,1 +1,1 @@
-# DEFLATE Compression Implementation
+# DEFLATE Compression Algorithm Implementation
