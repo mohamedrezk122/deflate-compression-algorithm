@@ -9,21 +9,24 @@
 
 
 struct Tuple {
-    uint32_t offset ;
-    uint32_t length ;
+    uint16_t offset ;
+    uint8_t length ;
     char next  ;
 };
 
 
 struct Sliding_Window {
-    int SEARCH_BUFF_SIZE ;
-    int LOOK_AHEAD_BUFF_SIZE ;
+    uint16_t SEARCH_BUFF_SIZE ;
+    uint8_t LOOK_AHEAD_BUFF_SIZE ;
     std::string search_buffer  ;
     std::string look_ahead_buffer ;
 };
 
-std::vector<unsigned char> convert_int_to_bytes(int value);
-uint32_t convert_bytes_to_int(unsigned char * bytes);
+std::vector<unsigned char> convert_int_to_bytes(int value, int num);
+
+uint16_t convert_bytes_to_int(unsigned char * bytes);
+uint8_t convert_bytes_to_int8(unsigned char * bytes);
+
 
 Tuple longest_matching_substring(std::string search_buffer, std::string look_ahead_buffer);
 
