@@ -105,12 +105,12 @@ void construct_key() {
         // we will make each char 128 bits as we have 128 char used
         // if we know which chars would be input we could have made it smaller
         // we will make the MSB all 0s and put 1 as seperator then the code
-        temp.assign(127 - cur->code.size(), '0');
+        temp.assign(255 - cur->code.size(), '0');
         temp += '1';
         temp += cur->code;
         enc += (char)bin_conv(temp.substr(0, 8));
         // as each char in ascii is 8 bits we will divide it to 8 bits
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 31; i++) {
             temp = temp.substr(8);
             enc += (char)bin_conv(temp.substr(0, 8));
         }
@@ -217,17 +217,17 @@ void decode_key(string fpath) {
     // setting the st
     st = new Node(0);
     // each tree node contain the ascii letter = 1 byte
-    // + huffman code encoded in 128 bit (to have all letter combinations as
-    // explained above) it took an integar every 8 bits 128 / 8 = 16 byte
+    // + huffman code encoded in 256 bit (to have all letter combinations as
+    // explained above) it took an integar every 8 bits 256 / 8 = 32 byte
     while (tree_size--) {
         char c; // the char
         enc_file.read(&c, 1);
 
-        char code_int[16]; // the binary code of huffman
-        enc_file.read(reinterpret_cast<char *>(code_int), 16);
+        char code_int[32]; // the binary code of huffman
+        enc_file.read(reinterpret_cast<char *>(code_int), 32);
 
         string huffman_code = "";
-        for (int i = 0; i < 16; i++) 
+        for (int i = 0; i < 32; i++) 
             huffman_code += convert_char_to_binary(code_int[i]);
         
         // Removing 0s by ignoring first and seperating 1 as stated above
@@ -252,8 +252,8 @@ void decompress_with_huffman(string in_fpath, string out_fpath) {
     char tree_size;
     enc_file.read(reinterpret_cast<char *>(&tree_size), 1);
 
-    // the key was (1 char for size + size * (char for letter +16 char for
-    // huffman)) we start after 17 *size +1 char we might have trailing 0s to
+    // the key was (1 char for size + size * (char for letter +32 char for
+    // huffman)) we start after 33 *size +1 char we might have trailing 0s to
     // ignore for getting the number of trailing 0s we will ste the pointer to
     // the end of file with offset -1
     enc_file.seekg(-1, ios::end);
@@ -261,7 +261,7 @@ void decompress_with_huffman(string in_fpath, string out_fpath) {
     enc_file.read(reinterpret_cast<char *>(&trail_zero), 1);
 
     // now setting poiter to start after key and parse the file
-    enc_file.seekg(1 + 17 * tree_size, ios::beg);
+    enc_file.seekg(1 + 33 * tree_size, ios::beg);
 
     string to_dec = "";
     char c;
