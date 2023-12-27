@@ -1,2 +1,7 @@
+test-cases/*.dat
+test-cases/*-recovered.*
+*.dat
+*.out
+*-back.cpp
 *.exe
 /output/

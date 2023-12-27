@@ -1,57 +1,54 @@
 #ifndef HUFFMAN_H
 #define HUFFMAN_H
+
+#include <fstream>
 #include <iostream>
 #include <queue>
+#include <string>
 #include <vector>
-#include <fstream>
 
-using namespace std;
-
-struct Node
-{
-    char data;
+struct Node {
+    unsigned char data;
     int freq;
-    string code;
+    std::string code;
     Node *left, *right;
 
     Node(int freq) : freq(freq), left(nullptr), right(nullptr) {}
 };
 
 // for priority queue to make minimum heap
-struct Comparison
-{
-    bool operator()(Node *left, Node *right)
-    {
+struct Comparison {
+    bool operator()(Node *left, Node *right) {
         return (left->freq) > (right->freq);
     }
 };
 
-Node *st;
-vector<Node *> char_arr;
-priority_queue<Node *, vector<Node *>, Comparison> huffman_tree; // the heap to construct
-string enc, decoded_string;
-
 // build huffman nodes
-void arrange_freq(string fpath);
+void arrange_freq(std::string fpath);
 void build();
-void generate_codes(Node *cur, string code);
+void generate_codes(Node *cur, std::string code);
 
 // encode
-int bin_conv(string s);
+int bin_conv(std::string s);
 void construct_key();
-void encode(string fpath);
+void encode(std::string fpath);
 
 // decode
-string dec_Bin_conv(int dec);
-void rebuild_codes(char letter, string huffman_code);
-void decode_key(string fpath);
+std::string convert_char_to_binary(int dec);
+void rebuild_codes(char letter, std::string huffman_code);
+void decode_key(std::string fpath);
 
 // steps
-void compress(string fpath);
-void decompress(string fpath_in);
+void compress_with_huffman(std::string in_fpath, std::string out_fpath);
+void decompress_with_huffman(std::string in_fpath, std::string out_fpath);
 
 // output file
-void write_file(string fpath,bool f);
+void write_file(std::string fpath, bool f);
 
+extern Node *st;
+extern std::vector<Node *> char_arr;
+extern std::priority_queue<Node *, std::vector<Node *>, Comparison>
+    huffman_tree; // the heap to construct
+extern std::string enc, decoded_string;
 
 #endif
