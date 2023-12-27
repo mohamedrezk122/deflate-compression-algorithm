@@ -38,7 +38,7 @@ void generate_codes(Node *cur, string code);
 
 // encode
 int bin_conv(string s);
-void construct_key(priority_queue<Node *, vector<Node *>, Comparison> &codes);
+void construct_key();
 void encode(string fpath);
 
 // decode
@@ -48,7 +48,7 @@ void decode_key(string fpath);
 
 // steps
 void compress(string fpath);
-void decompress(string fpath_in, string fpath_out);
+void decompress(string fpath_in);
 
 // output file
 void write_file(string fpath,bool f);

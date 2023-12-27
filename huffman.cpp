@@ -259,7 +259,7 @@ void decode_key(string fpath)
 /// @brief decompress the file using the key after building the tree
 /// @param fpath_in the file to decompress
 /// @param fpath_out the file to output
-void decompress(string fpath_in, string fpath_out)
+void decompress(string fpath_in)
 {
     fstream enc_file(fpath_in, ios::in | ios::binary);
 
